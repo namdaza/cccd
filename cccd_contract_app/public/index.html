@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CCCD ➜ Hợp đồng thuê nhà (AI Gemini)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">🏠</div>
+    <div class="titles">
+      <h1>Hợp đồng thuê nhà</h1>
+      <p>Trích xuất từ CCCD/Passport bằng <span class="gemini">Gemini 2.0 Flash</span></p>
+    </div>
+  </div>
+  <div class="actions">
+    <button id="btnExtract" class="primary">Trích xuất bằng AI</button>
+    <button id="btnDownload" class="ghost">Tải hợp đồng (PNG)</button>
+  </div>
+</header>
+
+<main class="grid">
+  <section class="card">
+    <h2>1) CCCD / Passport</h2>
+    <p class="muted">Tải ảnh mặt trước (ưu tiên ảnh rõ nét). Có thể kéo‑thả vào khung dưới.</p>
+
+    <div id="dropzone" class="dropzone">
+      <input id="fileInput" type="file" accept="image/*" hidden />
+      <div id="dzContent" class="dz-content">
+        <div class="dz-icon">📄</div>
+        <div>
+          <strong>Kéo ảnh vào đây</strong>
+          <div class="muted">hoặc</div>
+          <button id="btnPick" class="ghost small">Chọn file ảnh</button>
+        </div>
+      </div>
+      <canvas id="cccdCanvas" class="hidden"></canvas>
+      <img id="cccdPreview" class="hidden" alt="CCCD preview"/>
+      <div id="drawHint" class="hint hidden">Kéo chuột để khoanh vùng ảnh chân dung (có thể bỏ qua, AI sẽ tự phát hiện).</div>
+    </div>
+
+    <div class="toolbar">
+      <label class="switch">
+        <input type="checkbox" id="toggleDraw" />
+        <span></span>
+      </label>
+      <span>Bật vẽ khung cắt ảnh chân dung</span>
+      <button id="btnUseAICrop" class="ghost">Dùng khung AI</button>
+      <button id="btnClearCrop" class="ghost">Xóa khung</button>
+    </div>
+
+    <div class="kv">
+      <div><span>Loại giấy tờ:</span><strong id="fld_id_type">—</strong></div>
+      <div><span>Số giấy tờ:</span><strong id="fld_id_number">—</strong></div>
+      <div><span>Họ tên:</span><strong id="fld_full_name">—</strong></div>
+      <div><span>Ngày sinh:</span><strong id="fld_dob">—</strong></div>
+      <div><span>Giới tính:</span><strong id="fld_sex">—</strong></div>
+      <div><span>Ngày cấp:</span><strong id="fld_issue_date">—</strong></div>
+      <div><span>Nơi ĐKTT/Địa chỉ:</span><strong id="fld_address">—</strong></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2) Hợp đồng đã điền</h2>
+    <p class="muted">Xem trước hợp đồng. Có thể tải về PNG (hoặc PDF trong README).</p>
+    <div class="contract-wrap">
+      <canvas id="contractCanvas"></canvas>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div>
+    <span class="muted">Tip:</span> Chạy backend <code>server.py</code> và đặt biến môi trường <code>GEMINI_API_KEY</code>. 
+    Hoặc (không khuyến nghị) điền key trực tiếp trong <code>config.js</code>.
+  </div>
+  <div>
+    <a href="https://ai.google.dev/" target="_blank" rel="noreferrer">Tài liệu Gemini</a>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
